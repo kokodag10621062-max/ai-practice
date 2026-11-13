@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "partner",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--use-system-ca", "partner/server.js"],
+      "port": 3100
+    }
+  ]
+}
