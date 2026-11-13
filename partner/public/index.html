@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>협력사 점검</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <h1>협력사 점검</h1>
+      <p class="sub">사업자등록번호 엑셀을 올리면 국세청 휴·폐업 상태와 조달청 부정당제재 여부를 한 번에 확인합니다.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card upload">
+      <label class="drop" id="drop">
+        <input type="file" id="file" accept=".xlsx,.xls,.csv" hidden />
+        <strong>엑셀 파일 선택</strong>
+        <span>또는 여기로 끌어다 놓기 (.xlsx, .xls, .csv)</span>
+      </label>
+      <p class="hint">
+        첫 행이 제목이면 <b>'사업자'</b>가 들어간 열을, 없으면 10자리 번호가 있는 열을 자동으로 찾습니다.
+        <b>'업체명·상호·회사'</b> 열이 있으면 업체명으로 함께 표시합니다.
+      </p>
+      <div id="fileInfo" class="fileinfo" hidden></div>
+    </section>
+
+    <section id="progressBox" class="card" hidden>
+      <div class="progress"><div id="bar"></div></div>
+      <p id="progressText" class="muted"></p>
+    </section>
+
+    <section id="resultBox" hidden>
+      <div class="summary" id="summary"></div>
+
+      <div class="toolbar">
+        <div class="filters" id="filters">
+          <button data-f="all" class="on">전체</button>
+          <button data-f="warn">주의</button>
+          <button data-f="fail">조회 실패</button>
+          <button data-f="ok">정상</button>
+        </div>
+        <div class="actions">
+          <button id="retryBtn" class="ghost" hidden>실패 건 다시 조회</button>
+          <button id="downloadBtn" class="primary">결과 엑셀 내려받기</button>
+        </div>
+      </div>
+
+      <div class="tablewrap">
+        <table id="table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>사업자등록번호</th>
+              <th>업체명</th>
+              <th>사업자 상태</th>
+              <th>과세유형</th>
+              <th>폐업일</th>
+              <th>부정당제재</th>
+              <th>제재 내용</th>
+              <th>종합</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note">
+        ※ 부정당제재는 조달청 나라장터 API 기준으로 <b>조회 시점에 효력이 있는 제재</b>만 제공됩니다(만료·해제된 제재, 나라장터 미등록 업체·개인 제외).
+        <br />※ <b>조회 실패</b>는 API 오류·시간 초과 등으로 확인하지 못한 경우이며, <b>0건</b>(제재 없음 확인)과 다릅니다.
+      </p>
+    </section>
+  </main>
+
+  <script src="/vendor/xlsx.full.min.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
